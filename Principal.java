@@ -18,6 +18,8 @@ public class Principal {
 		}//fim bloco try catch
 		H.tabela(frequencia);
 		H.entropia(frequencia);
+		Huffman_Tree Ht = new Huffman_Tree(frequencia);
+		Ht.createTree();
 	}
 
 }

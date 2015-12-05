@@ -10,12 +10,12 @@ public class Readbyte {
 		/*Le arquivo byte a byte e calcula fequencia */
 		try{
 			
-		input  = new FileInputStream("os_maias_queiros.txt");
+		input  = new FileInputStream("teste.txt"); //txt com o alfabeto
 		int b;
 		
 		while ((b = input.read()) != -1) {
             frequencia[b] += 1;
-            n_bytes += frequencia[b];
+            n_bytes++;//n_bytes += frequencia[b]; tinha treta aqui, acumulando valores absurdos
         }
    }finally{
 	   if (input != null) {
