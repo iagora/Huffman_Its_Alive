@@ -6,7 +6,7 @@ public class Readbyte {
 	float[] frequencia = new float[256]; 
 	long n_bytes = 0  ;
 	public float[] readbytes() throws IOException{
-		
+		//comentario teste
 		/*Le arquivo byte a byte e calcula fequencia */
 		try{
 			
