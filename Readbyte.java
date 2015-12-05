@@ -7,7 +7,7 @@ public class Readbyte {
 	
 	public void readbytes() throws IOException{
 		
-		
+		/*Le arquivo byte a byte e calcula fequencia */
 		try{
 			
 		input  = new FileInputStream("os_maias_queiros.txt");
@@ -21,5 +21,8 @@ public class Readbyte {
            input.close();
        }
    }//fim finally
+		for(int i =0;i<256;i++){
+			System.out.println(frequencia[i]);
+		}
   }//fim do readbytes
 }//fim da função Readbyte

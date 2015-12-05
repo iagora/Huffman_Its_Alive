@@ -1,11 +1,16 @@
+import java.io.IOException;
 
 public class Principal {
 
 	public static void main(String[] args) {
-		Read ler = new Read();
+		Readbyte ler = new Readbyte();
 				
-		ler.leitura();
-        ler.frequencia();
+		try {
+			ler.readbytes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
 	}
 
