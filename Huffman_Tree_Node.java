@@ -12,5 +12,7 @@ public class Huffman_Tree_Node {
 	
 	public Huffman_Tree_Node(Huffman_Tree_Node f, Huffman_Tree_Node f1){ //construtor pra nós
 		this.p = f.p + f1.p;
+		this.filho = f;
+		this.filho1 = f1;
 	}
 }
