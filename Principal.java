@@ -4,7 +4,9 @@ public class Principal {
 
 	public static void main(String[] args) {
 		Readbyte ler = new Readbyte();
-		long[] frequencia = new long[256];
+		Entropia H = new Entropia();
+		
+		float[] frequencia = new float[256];
 				
 		try {
 			
@@ -13,8 +15,9 @@ public class Principal {
 		} catch (IOException e) {
 			
 			e.printStackTrace();
-		}
-        
+		}//fim bloco try catch
+		H.tabela(frequencia);
+		H.entropia(frequencia);
 	}
 
 }
