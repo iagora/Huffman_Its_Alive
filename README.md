@@ -1,11 +1,13 @@
 # Huffman_unb
 Implementation of Huffman coding for a University project using Java language
 
-A se implementar
+A se implementar:
 
 Metodo arvore()que constroi da arvore de Huffman, e cria codificação para cada byte
+
 Metodo Lav() que calcula comprimento médio do código 
-Metodo que realiza a compactação
+
+Metodo que realiza a compactação:
   - Verifica qual a codificação de cada byte
   
   -Lê o arquivo byte a byte e codifica cada byte de acordo com a codifição de Huffman desenvolvida
