@@ -25,7 +25,7 @@ public class Entropia {
 		if(frequencia[i] == 0){
 			
 		}else{
-			H +=  (long) (frequencia[i]*(Math.log10(1/frequencia[i]))/(Math.log10(2)));
+			H +=  frequencia[i]*(Math.log10(1/frequencia[i]))/(Math.log10(2));
 		}
 		
 		
