@@ -15,4 +15,14 @@ public class Huffman_Tree_Node {
 		this.filho = f;
 		this.filho1 = f1;
 	}
+
+	public float compareTo(Huffman_Tree_Node o) {
+		return this.p - o.p;
+	}
+	
+	public boolean isLeaf (){
+		assert ((filho == null) && (filho1 == null)) || ((filho != null) && (filho1 != null));
+        return (filho == null) && (filho1 == null);
+    }
 }
+

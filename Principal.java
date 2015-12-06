@@ -19,7 +19,7 @@ public class Principal {
 		H.tabela(frequencia);
 		H.entropia(frequencia);
 		Huffman_Tree Ht = new Huffman_Tree(frequencia);
-		Ht.createTree();
+		Huffman_Tree_Node Tree = Ht.createTree();
 	}
 
 }
