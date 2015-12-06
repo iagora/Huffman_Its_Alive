@@ -69,43 +69,45 @@ public class Huffman_Tree {
 	}
 
 		
-	public void compress() {
+	public void compress() throws IOException {
         // read the input
         FileInputStream s = new FileInputStream("teste.txt");
         Vector input = new Vector();
         int c;
-        do {
-        	c = s.read();
-        	input.add((char)s.read());
-        } while(c != -1);
+        try{
+        	while((c = s.read()) != -1) {
+        		input.add(c);
+        	}
+        } finally{
+        	s.close();
+        }
         //char[] input = s.toCharArray();
 
         // tabulate frequency counts
         float[] freq = new float[256];
         freq = ler.readbytes();
 
-        // build Huffman trie
-        Huffman_Tree root = new Huffman_Tree(freq);
+        Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
 
         // build code table
         String[] st = new String[256];
         buildCode(st, root.tree, "");
 
         // print trie for decoder
-        writeTrie(root);
+        //writeTrie(root);
 
         // print number of bytes in original uncompressed message
         //BinaryStdOut.write(input.length);
 
         // use Huffman code to encode input
         for (int i = 0; i < input.size(); i++) {
-            String code = st[input[i]];
+            String code = st[(int)input.get(i)];
             for (int j = 0; j < code.length(); j++) {
                 if (code.charAt(j) == '0') {
-                    BinaryStdOut.write(false);
+                    System.out.print("0");
                 }
                 else if (code.charAt(j) == '1') {
-                    BinaryStdOut.write(true);
+                    System.out.print("1");
                 }
                 else throw new IllegalStateException("Illegal state");
             }
