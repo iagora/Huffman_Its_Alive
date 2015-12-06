@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.io.*;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Huffman_Tree {
@@ -97,6 +98,7 @@ public class Huffman_Tree {
         //writeTrie(root);
 
         // codificando a saida
+        FileOutputStream out = new FileOutputStream("teste_comprimido.hue");
         int k =0;
         String b = "";
         byte a;
@@ -111,13 +113,16 @@ public class Huffman_Tree {
 	                    b = b + '1';
 	                }
 	                else throw new IllegalStateException("Illegal state");
+	                
+	                if(k % 8 == 0){
+	                	//System.out.print(b);
+	    	        	a = strToByteArray(b);
+	    	        	out.write(a);
+	    	        	b = "";
+	    	        }
 	            }
-	        if(k % 8 == 0){
-	        	a = Byte.parseByte(b);
-	        	
-	        	b = "";
-	        }
         }
+        out.close();
     }
 	
 	private void buildCode(String[] st, Huffman_Tree_Node x, String s) {
@@ -129,6 +134,17 @@ public class Huffman_Tree {
             st[x.c] = s;
         }
     }
-
+	
+	private byte strToByteArray(String s) {
+        byte[] bval;
+        try {
+            bval = new BigInteger(s, 2).toByteArray();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            bval = new BigInteger("00000000", 2).toByteArray();
+        }
+        return bval[0];
+        
+    }
 
 }
