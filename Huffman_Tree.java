@@ -13,15 +13,6 @@ public class Huffman_Tree {
 			if (frequencia[i]> 0)
 				allNodes.add(new Huffman_Tree_Node(frequencia[i], i)); //mapeia todos os nós
 		
-		//TESTE! pra ver se foram eliminados os caracteres q nao aparecem
-		//for(int j = 0; j < temp.size(); j++){
-		//	Huffman_Tree_Node aux = temp.get(j);
-		//	System.out.println(aux.c);
-		//}
-		//SUCESSO: o arquivo usado no teste continha apenas o alfabeto e temp tinha apenas os nós validos.
-		
-		//TODO: organizar a lista auxiliar 'temp' pra começar a linkar os nodes
-		//estou pensando em usar sublist pra linkar, to pensando na logica.
 		while (allNodes.size() > 1) {
 			int k = getIndexOfMin(allNodes);
             Huffman_Tree_Node f  = allNodes.remove(k);
