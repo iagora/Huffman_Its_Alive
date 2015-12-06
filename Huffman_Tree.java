@@ -20,7 +20,7 @@ public class Huffman_Tree {
             Huffman_Tree_Node pai = new Huffman_Tree_Node(f, f1);
             allNodes.add(pai);
         }
-        return allNodes.get(1);
+        return allNodes.get(0);
 		
 	}
 	
