@@ -96,21 +96,27 @@ public class Huffman_Tree {
         // print trie for decoder
         //writeTrie(root);
 
-        // print number of bytes in original uncompressed message
-        //BinaryStdOut.write(input.length);
-
-        // use Huffman code to encode input
+        // codificando a saida
+        int k =0;
+        String b = "";
+        byte a;
         for (int i = 0; i < input.size(); i++) {
             String code = st[(int)input.get(i)];
-            for (int j = 0; j < code.length(); j++) {
-                if (code.charAt(j) == '0') {
-                    System.out.print("0");
-                }
-                else if (code.charAt(j) == '1') {
-                    System.out.print("1");
-                }
-                else throw new IllegalStateException("Illegal state");
-            }
+	            for (int j = 0; j < code.length(); j++) {
+	            	k++;
+	                if (code.charAt(j) == '0') {
+	                    b = b + '0';
+	                }
+	                else if (code.charAt(j) == '1') {
+	                    b = b + '1';
+	                }
+	                else throw new IllegalStateException("Illegal state");
+	            }
+	        if(k % 8 == 0){
+	        	a = Byte.parseByte(b);
+	        	
+	        	b = "";
+	        }
         }
     }
 	
