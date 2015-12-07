@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.io.*;
-import java.math.BigInteger;
 import java.util.*;
 
 public class Huffman_Tree {
@@ -116,7 +115,7 @@ public class Huffman_Tree {
 	                else throw new IllegalStateException("Illegal state");
 	                
 	                if(k % 8 == 0){
-	                	a = strToByteArray(b);
+	                	a = (byte) Integer.parseInt(b,2);
 	    	        	out.write(a);
 	    	        	b = "";
 	    	        	flag = true;
@@ -127,7 +126,8 @@ public class Huffman_Tree {
         	while (b.length() < 8){
         		b = b + '0';
         	}
-        	a = strToByteArray(b);
+        	
+        	a = (byte) Integer.parseInt(b,2);
         	out.write((int)a);
         }
         
@@ -138,7 +138,7 @@ public class Huffman_Tree {
 	public void expand() throws Exception {
 		
 		float[] freq = new float[256];
-		FileOutputStream out = new FileOutputStream("teste_descomprimido.txt");
+		PrintWriter out = new PrintWriter("teste_descomprimido.txt");
 		FileInputStream in = new FileInputStream("teste_comprimido.hue");
 		ObjectInputStream tab = new ObjectInputStream(in);
 		freq =(float[])tab.readObject();
@@ -153,17 +153,16 @@ public class Huffman_Tree {
             String s = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
             System.out.print(s);
             
-            for (int i = 0; i<8; i++) {
-            	if (x.isLeaf()){
-            		out.write(x.c);
-            		x = root.tree;
-            		break;
-            	}
-                char bit = s.charAt(i);
-                if (bit==0) x = x.filho;
-                else     x = x.filho1;
-                
+            for (int i = 0; i < s.length(); i++) {
+                x = root.tree;
+                while (!x.isLeaf()) {
+                	char bit = s.charAt(i);
+                    if (bit==0) x = x.filho;
+                    else     x = x.filho1;
+                }
+                out.write(x.c);
             }
+            
         }
         
         
@@ -184,18 +183,6 @@ public class Huffman_Tree {
         else {
             st[x.c] = s;
         }
-    }
-	
-	private byte strToByteArray(String s) {
-        byte[] bval;
-        try {
-            bval = new BigInteger(s, 2).toByteArray();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            bval = new BigInteger("00000000", 2).toByteArray();
-        }
-        return bval[0];
-        
     }
 
 }
