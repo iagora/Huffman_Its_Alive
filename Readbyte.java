@@ -20,7 +20,7 @@ public class Readbyte {
    }finally{
 	   if (input != null) {
            input.close();
-           System.out.println(n_bytes);
+           //System.out.println(n_bytes);
        }
    }//fim finally
 		/*		

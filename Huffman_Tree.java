@@ -149,20 +149,29 @@ public class Huffman_Tree {
         int b;
         System.out.print('\n');//tirar
         while((b = in.read()) != -1) {
-        	
+        	/*
+        	 * String.format tá certinho, o print confirma;
+        	 * TODO:lógica pra decodificar e refazer o txt;
+        	 */
             String s = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
             System.out.print(s);
-            
-            for (int i = 0; i < s.length(); i++) {
-                x = root.tree;
+            /*
+            for (int i = 0; i < 8; i++) {
+               x = root.tree;
                 while (!x.isLeaf()) {
                 	char bit = s.charAt(i);
-                    if (bit==0) x = x.filho;
-                    else     x = x.filho1;
+                    if (bit==0){
+                    	x = x.filho;
+                    	i++;
+                    }
+                    else {
+                    	x = x.filho1;
+                    	i++;
+                    }
                 }
                 out.write(x.c);
             }
-            
+            */
         }
         
         
