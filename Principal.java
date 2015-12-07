@@ -20,12 +20,12 @@ public class Principal {
 		H.entropia(frequencia);
 		Huffman_Tree Ht = new Huffman_Tree(frequencia);
 		try{
-			Ht.comprimir();
+			Ht.comprimir(ler.caminho, frequencia, ler.n_bytes, ler.nomedoarquivo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		try {
-			Ht.expandir();
+			Ht.expandir("teste.hue");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

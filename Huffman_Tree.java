@@ -66,8 +66,8 @@ public class Huffman_Tree {
 	}
 
 		
-	public void comprimir() throws Exception {
-        FileInputStream s = new FileInputStream("os_maias_queiros.txt");
+	public void comprimir(String caminho, float[] freq, long tam, String nome) throws Exception {
+        FileInputStream s = new FileInputStream(caminho);
         Vector<Integer> input = new Vector<Integer>();
         int c;
         // lê a arquivo byte a byte e coloca no Vector
@@ -80,9 +80,9 @@ public class Huffman_Tree {
         }
 
         // acha a frequencia de cada byte
-        float[] freq = new float[256];
-        freq = ler.readbytes();
-        long tam = ler.n_bytes;
+        //float[] freq = new float[256];
+        //freq = ler.readbytes();
+        //long tam = ler.n_bytes;
         
         
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
@@ -90,11 +90,11 @@ public class Huffman_Tree {
         // constrói uma tabela de conversão direta
         String[] tabela = new String[256];
         buildCode(tabela, root.tree, "");
-        
-        FileOutputStream out = new FileOutputStream("teste_comprimido.hue");
+        FileOutputStream out = new FileOutputStream(caminho.substring(0,caminho.indexOf('.'))+".hue");
         tab = new ObjectOutputStream(out);
         tab.writeObject(freq);
         tab.writeObject(tam); //manda o tamanho para tratar o zero-padding do ultimo byte na descompressao
+        tab.writeObject(nome);
         
         // codificando a saida
         int k =0;
@@ -137,14 +137,17 @@ public class Huffman_Tree {
         out.close();
     }
 	
-	public void expandir() throws Exception {
+	public void expandir(String local) throws Exception {
 		
 		float[] freq = new float[256];
-		FileOutputStream out = new FileOutputStream("teste_descomprimido.txt");
-		FileInputStream in = new FileInputStream("teste_comprimido.hue");
+		
+		FileInputStream in = new FileInputStream(local);
 		ObjectInputStream tab = new ObjectInputStream(in);
 		freq =(float[])tab.readObject();
 		long tam = (long)tab.readObject();
+		String nome =(String)tab.readObject();
+		
+		FileOutputStream out = new FileOutputStream(nome);
 		
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
         
