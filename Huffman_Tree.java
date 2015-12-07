@@ -174,8 +174,6 @@ public class Huffman_Tree {
             */
         }
         
-        
-        //TODO:usar o código para expandir
         out.close();
         in.close();
         tab.close();
