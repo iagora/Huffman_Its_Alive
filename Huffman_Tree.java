@@ -9,27 +9,27 @@ public class Huffman_Tree {
 	private ObjectOutputStream tab;
 	
 	public Huffman_Tree(float[] freq){
-		tree = this.createTree(freq);
+		tree = this.createTree(freq);	//já monta a árvore no construtor msm
 	}
 	
-	private Huffman_Tree_Node createTree(float[] frequencia){
+	private Huffman_Tree_Node createTree(float[] frequencia){ //monta a árvore, entregando a raiz, funciona em um estilo recursivo
 		for (int i = 0; i < frequencia.length; i++)
 			if (frequencia[i]> 0)
-				allNodes.add(new Huffman_Tree_Node(frequencia[i], i)); //mapeia todos os nós
+				allNodes.add(new Huffman_Tree_Node(frequencia[i], i)); //mapeia todos as folhas
 		
 		while (allNodes.size() > 1) {
 			int k = getIndexOfMin(allNodes);
             Huffman_Tree_Node f  = allNodes.remove(k);
             k = getIndexOfMin(allNodes);
             Huffman_Tree_Node f1 = allNodes.remove(k);
-            Huffman_Tree_Node pai = new Huffman_Tree_Node(f, f1);
+            Huffman_Tree_Node pai = new Huffman_Tree_Node(f, f1); //constroi nós a partir de nós e/ou folhas
             allNodes.add(pai);
         }
-        return allNodes.get(0);
+        return allNodes.get(0); //retorna a raiz, que nesse estágio contém todos os nós e folhas
 		
 	}
 	
-	private int getIndexOfMin(ArrayList<Huffman_Tree_Node> data) {
+	private int getIndexOfMin(ArrayList<Huffman_Tree_Node> data) { //método auxiliar utilizado pra achar o índice dos nós com menores probabilidades
 	    float min = Float.MAX_VALUE;
 	    int index = -1;
 	    for (int i = 0; i < data.size(); i++) {
@@ -60,17 +60,17 @@ public class Huffman_Tree {
 		}
 		
 		public boolean isLeaf (){
-			//assert ((filho == null) && (filho1 == null)) || ((filho != null) && (filho1 != null));
+			//verifica se é folha, ou seja se não tem filhos
 	        return (filho == null) && (filho1 == null);
 	    }
 	}
 
 		
-	public void compress() throws Exception {
-        // read the input
+	public void comprimir() throws Exception {
         FileInputStream s = new FileInputStream("teste.txt");
         Vector<Integer> input = new Vector<Integer>();
         int c;
+        // lê a arquivo byte a byte e coloca no Vector
         try{
         	while((c = s.read()) != -1) {
         		input.add(c);
@@ -78,15 +78,14 @@ public class Huffman_Tree {
         } finally{
         	s.close();
         }
-        //char[] input = s.toCharArray();
 
-        // tabulate frequency counts
+        // acha a frequencia de cada byte
         float[] freq = new float[256];
         freq = ler.readbytes();
 
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
 
-        // build code table
+        // constrói uma tabela de conversão direta
         String[] st = new String[256];
         buildCode(st, root.tree, "");
         
@@ -106,11 +105,11 @@ public class Huffman_Tree {
 	            	k++;
 	                if (code.charAt(j) == '0') {
 	                    b = b + '0';
-	                    System.out.print('0'); //tirar
+	                    System.out.print('0'); //TESTE: printa a sequencia obtida na compressão no console
 	                }
 	                else if (code.charAt(j) == '1') {
 	                    b = b + '1';
-	                    System.out.print('1');//tirar
+	                    System.out.print('1');//TESTE: printa a sequencia obtida na compressão no console
 	                }
 	                else throw new IllegalStateException("Illegal state");
 	                
@@ -130,12 +129,12 @@ public class Huffman_Tree {
         	a = (byte) Integer.parseInt(b,2);
         	out.write((int)a);
         }
-        
+        System.out.print('\n'); //TESTE: quebra a linha pra separar a sequencia obtida na compressao da sequencia da expansao
         tab.close();
         out.close();
     }
 	
-	public void expand() throws Exception {
+	public void expandir() throws Exception {
 		
 		float[] freq = new float[256];
 		PrintWriter out = new PrintWriter("teste_descomprimido.txt");
@@ -145,15 +144,16 @@ public class Huffman_Tree {
 		
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
         
+        
+      //DECODING: decodifica instantaneamente por meio de um buffer
         Huffman_Tree_Node x = root.tree;
         int b;
         char c;
-        System.out.print('\n');//tirar
-        Vector<Character> buffer = new Vector<Character>();
+        Vector<Character> buffer = new Vector<Character>(); 
         while((b = in.read()) != -1) {
         	/*
-        	 * String.format tá certinho, o print confirma;
-        	 * TODO:lógica pra decodificar e refazer o txt;
+        	 * Decodificação funcionando*;
+        	 * *TODO:tratar o padding do último byte;
         	 */
             String s = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
             System.out.print(s);
@@ -178,6 +178,7 @@ public class Huffman_Tree {
             }
             
         }
+        //DECODING:fim
         
         out.close();
         in.close();
@@ -185,9 +186,8 @@ public class Huffman_Tree {
 	}
 	
 
-
-	
-	private void buildCode(String[] st, Huffman_Tree_Node x, String s) {
+	//método auxiliar responsável por criar a tabela de tradução st por meio de recursividade
+	private void buildCode(String[] st, Huffman_Tree_Node x, String s) { 
         if (!x.isLeaf()) {
             buildCode(st, x.filho,  s + '0');
             buildCode(st, x.filho1, s + '1');
