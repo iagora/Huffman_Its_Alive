@@ -147,7 +147,9 @@ public class Huffman_Tree {
         
         Huffman_Tree_Node x = root.tree;
         int b;
+        char c;
         System.out.print('\n');//tirar
+        Vector<Character> buffer = new Vector<Character>();
         while((b = in.read()) != -1) {
         	/*
         	 * String.format tá certinho, o print confirma;
@@ -155,23 +157,25 @@ public class Huffman_Tree {
         	 */
             String s = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
             System.out.print(s);
-            /*
-            for (int i = 0; i < 8; i++) {
-               x = root.tree;
-                while (!x.isLeaf()) {
-                	char bit = s.charAt(i);
-                    if (bit==0){
-                    	x = x.filho;
-                    	i++;
-                    }
-                    else {
-                    	x = x.filho1;
-                    	i++;
-                    }
-                }
-                out.write(x.c);
+            
+            for(int j = 0; j<s.length();j++){
+            	buffer.add(s.charAt(j));
             }
-            */
+            
+            while (!x.isLeaf()){
+            	c = buffer.remove(0);
+            	if (c == '0')
+            		x = x.filho;
+            	else
+            		x = x.filho1;
+            	if (buffer.size()==0)
+            		break;
+            }
+            if(x.isLeaf()){
+            	out.write(x.c);
+            	x = root.tree;
+            }
+            
         }
         
         out.close();
