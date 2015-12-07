@@ -86,8 +86,8 @@ public class Huffman_Tree {
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
 
         // constrói uma tabela de conversão direta
-        String[] st = new String[256];
-        buildCode(st, root.tree, "");
+        String[] tabela = new String[256];
+        buildCode(tabela, root.tree, "");
         
         FileOutputStream out = new FileOutputStream("teste_comprimido.hue");
         tab = new ObjectOutputStream(out);
@@ -99,7 +99,7 @@ public class Huffman_Tree {
         byte a;
         boolean flag = false;
         for (int i = 0; i < input.size(); i++) {
-            String code = st[(int)input.get(i)];
+            String code = tabela[(int)input.get(i)];
 	            for (int j = 0; j < code.length(); j++) {
 	            	flag=false;
 	            	k++;
@@ -186,14 +186,14 @@ public class Huffman_Tree {
 	}
 	
 
-	//método auxiliar responsável por criar a tabela de tradução st por meio de recursividade
-	private void buildCode(String[] st, Huffman_Tree_Node x, String s) { 
-        if (!x.isLeaf()) {
-            buildCode(st, x.filho,  s + '0');
-            buildCode(st, x.filho1, s + '1');
+	//método auxiliar responsável por criar a tabela de tradução por meio de recursividade
+	private void buildCode(String[] tabela, Huffman_Tree_Node notRoot, String s) { 
+        if (!notRoot.isLeaf()) {
+            buildCode(tabela, notRoot.filho,  s + '0');
+            buildCode(tabela, notRoot.filho1, s + '1');
         }
         else {
-            st[x.c] = s;
+            tabela[notRoot.c] = s;
         }
     }
 
