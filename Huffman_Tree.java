@@ -7,6 +7,7 @@ public class Huffman_Tree {
 	ArrayList<Huffman_Tree_Node> allNodes = new ArrayList<Huffman_Tree_Node>();
 	Readbyte ler = new Readbyte();
 	Huffman_Tree_Node tree = null;
+	private ObjectOutputStream tab;
 	
 	public Huffman_Tree(float[] freq){
 		tree = this.createTree(freq);
@@ -44,13 +45,13 @@ public class Huffman_Tree {
 	
 	private class Huffman_Tree_Node {
 		float p; 	//qual a frequencia
-		byte c;		//qual o byte
+		int c;		//qual o byte
 		Huffman_Tree_Node filho = null;
 		Huffman_Tree_Node filho1= null;
 		
 		public Huffman_Tree_Node(float a, int c){ //construtor pra folhas
 			this.p = a;
-			this.c =(byte) c;
+			this.c = c;
 		}
 		
 		public Huffman_Tree_Node(Huffman_Tree_Node f, Huffman_Tree_Node f1){ //construtor pra nós
@@ -58,13 +59,9 @@ public class Huffman_Tree {
 			this.filho = f;
 			this.filho1 = f1;
 		}
-
-		public float compareTo(Huffman_Tree_Node o) {
-			return this.p - o.p;
-		}
 		
 		public boolean isLeaf (){
-			assert ((filho == null) && (filho1 == null)) || ((filho != null) && (filho1 != null));
+			//assert ((filho == null) && (filho1 == null)) || ((filho != null) && (filho1 != null));
 	        return (filho == null) && (filho1 == null);
 	    }
 	}
@@ -73,7 +70,7 @@ public class Huffman_Tree {
 	public void compress() throws Exception {
         // read the input
         FileInputStream s = new FileInputStream("teste.txt");
-        Vector input = new Vector();
+        Vector<Integer> input = new Vector<Integer>();
         int c;
         try{
         	while((c = s.read()) != -1) {
@@ -95,11 +92,9 @@ public class Huffman_Tree {
         buildCode(st, root.tree, "");
         
         FileOutputStream out = new FileOutputStream("teste_comprimido.hue");
-        ObjectOutputStream tab = new ObjectOutputStream(out);
+        tab = new ObjectOutputStream(out);
         tab.writeObject(freq);
-        // print trie for decoder
-        //writeTrie(root);
-
+        
         // codificando a saida
         int k =0;
         String b = "";
@@ -112,9 +107,11 @@ public class Huffman_Tree {
 	            	k++;
 	                if (code.charAt(j) == '0') {
 	                    b = b + '0';
+	                    System.out.print('0'); //tirar
 	                }
 	                else if (code.charAt(j) == '1') {
 	                    b = b + '1';
+	                    System.out.print('1');//tirar
 	                }
 	                else throw new IllegalStateException("Illegal state");
 	                
@@ -131,10 +128,11 @@ public class Huffman_Tree {
         		b = b + '0';
         	}
         	a = strToByteArray(b);
-        	out.write(a);
+        	out.write((int)a);
         }
-        out.close();
+        
         tab.close();
+        out.close();
     }
 	
 	public void expand() throws Exception {
@@ -148,16 +146,18 @@ public class Huffman_Tree {
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
         
         Huffman_Tree_Node x = root.tree;
-        byte b;
-        
-        while((b = (byte)in.read()) != -1) {
+        int b;
+        System.out.print('\n');//tirar
+        while((b = in.read()) != -1) {
         	
             String s = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
-           
+            System.out.print(s);
+            
             for (int i = 0; i<8; i++) {
             	if (x.isLeaf()){
             		out.write(x.c);
             		x = root.tree;
+            		break;
             	}
                 char bit = s.charAt(i);
                 if (bit==0) x = x.filho;

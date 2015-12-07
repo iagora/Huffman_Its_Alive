@@ -18,7 +18,7 @@ public class Entropia {
 	
 	/*Calcula entropia, medida de informacao de Shannon da fonte utilizando vetor frequencia*/
 	public float entropia(float[] frequencia){
-		float H=0,acumulador;
+		float H=0;
 		for(int i = 0; i < 256;i++){
 		
 	  //Tratamento de caso limite onde log10 0 é indeterminado

@@ -28,13 +28,13 @@ public class Readbyte {
 			System.out.println(frequencia[i]);
 		}
 		*/
-		/*
+		
 		for(int i = 0;i < 256;i++){
 			
 			frequencia[i] = frequencia[i]/n_bytes;
-			System.out.println(frequencia[i]);
+			//System.out.println(frequencia[i]);
 		}
-		*/
+		
 		return frequencia;
   }//fim do readbytes
 }//fim da função Readbyte
