@@ -12,6 +12,10 @@ public class Huffman_Tree {
 		tree = this.createTree(freq);	//já monta a árvore no construtor msm
 	}
 	
+	public Huffman_Tree(){
+		
+	}
+	
 	private Huffman_Tree_Node createTree(float[] frequencia){ //monta a árvore, entregando a raiz, funciona em um estilo recursivo
 		for (int i = 0; i < frequencia.length; i++)
 			if (frequencia[i]> 0)
