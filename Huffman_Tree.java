@@ -82,7 +82,9 @@ public class Huffman_Tree {
         // acha a frequencia de cada byte
         float[] freq = new float[256];
         freq = ler.readbytes();
-
+        long tam = ler.n_bytes;
+        
+        
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
 
         // constrói uma tabela de conversão direta
@@ -92,6 +94,7 @@ public class Huffman_Tree {
         FileOutputStream out = new FileOutputStream("teste_comprimido.hue");
         tab = new ObjectOutputStream(out);
         tab.writeObject(freq);
+        tab.writeObject(tam); //manda o tamanho para tratar o zero-padding do ultimo byte na descompressao
         
         // codificando a saida
         int k =0;
@@ -141,16 +144,17 @@ public class Huffman_Tree {
 		FileInputStream in = new FileInputStream("teste_comprimido.hue");
 		ObjectInputStream tab = new ObjectInputStream(in);
 		freq =(float[])tab.readObject();
+		long tam = (long)tab.readObject();
 		
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
-        
         
       //DECODING: decodifica instantaneamente por meio de um buffer
         Huffman_Tree_Node x = root.tree;
         int b;
+        int i = 0;
         char c;
         Vector<Character> buffer = new Vector<Character>(); 
-        while((b = in.read()) != -1) {
+        while((b = in.read()) != -1 & i<tam) {
         	/*
         	 * Decodificação funcionando*;
         	 * *TODO:tratar o padding do último byte;
@@ -172,8 +176,15 @@ public class Huffman_Tree {
 	            		break;
 	            }
 	            if(x.isLeaf()){
+	            	i++;
 	            	out.write(x.c);
 	            	x = root.tree;
+	            	if (i==tam){
+	            		out.close();
+	                    in.close();
+	                    tab.close();
+	            		return;
+	            	}
 	            }
             }
             
