@@ -161,19 +161,20 @@ public class Huffman_Tree {
             for(int j = 0; j<s.length();j++){
             	buffer.add(s.charAt(j));
             }
-            
-            while (!x.isLeaf()){
-            	c = buffer.remove(0);
-            	if (c == '0')
-            		x = x.filho;
-            	else
-            		x = x.filho1;
-            	if (buffer.size()==0)
-            		break;
-            }
-            if(x.isLeaf()){
-            	out.write(x.c);
-            	x = root.tree;
+            while (buffer.size() != 0){
+	            while (!x.isLeaf()){
+	            	c = buffer.remove(0);
+	            	if (c == '0')
+	            		x = x.filho;
+	            	else
+	            		x = x.filho1;
+	            	if (buffer.size()==0)
+	            		break;
+	            }
+	            if(x.isLeaf()){
+	            	out.write(x.c);
+	            	x = root.tree;
+	            }
             }
             
         }
