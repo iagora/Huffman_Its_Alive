@@ -10,7 +10,7 @@ public class Readbyte {
 		/*Le arquivo byte a byte e calcula fequencia */
 		try{
 			
-		input  = new FileInputStream("teste.txt");
+		input  = new FileInputStream("os_maias_queiros.txt");
 		int b;
 		
 		while ((b = input.read()) != -1) {

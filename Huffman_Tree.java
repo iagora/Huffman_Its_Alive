@@ -67,7 +67,7 @@ public class Huffman_Tree {
 
 		
 	public void comprimir() throws Exception {
-        FileInputStream s = new FileInputStream("teste.txt");
+        FileInputStream s = new FileInputStream("os_maias_queiros.txt");
         Vector<Integer> input = new Vector<Integer>();
         int c;
         // lê a arquivo byte a byte e coloca no Vector
@@ -105,11 +105,11 @@ public class Huffman_Tree {
 	            	k++;
 	                if (code.charAt(j) == '0') {
 	                    b = b + '0';
-	                    System.out.print('0'); //TESTE: printa a sequencia obtida na compressão no console
+	                    //System.out.print('0'); //TESTE: printa a sequencia obtida na compressão no console
 	                }
 	                else if (code.charAt(j) == '1') {
 	                    b = b + '1';
-	                    System.out.print('1');//TESTE: printa a sequencia obtida na compressão no console
+	                    //System.out.print('1');//TESTE: printa a sequencia obtida na compressão no console
 	                }
 	                else throw new IllegalStateException("Illegal state");
 	                
@@ -129,7 +129,7 @@ public class Huffman_Tree {
         	a = (byte) Integer.parseInt(b,2);
         	out.write((int)a);
         }
-        System.out.print('\n'); //TESTE: quebra a linha pra separar a sequencia obtida na compressao da sequencia da expansao
+        //System.out.print('\n'); //TESTE: quebra a linha pra separar a sequencia obtida na compressao da sequencia da expansao
         tab.close();
         out.close();
     }
@@ -156,7 +156,7 @@ public class Huffman_Tree {
         	 * *TODO:tratar o padding do último byte;
         	 */
             String s = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
-            System.out.print(s);
+            //System.out.print(s);
             
             for(int j = 0; j<s.length();j++){
             	buffer.add(s.charAt(j));
