@@ -70,7 +70,7 @@ public class Huffman_Tree {
 	}
 
 		
-	public void compress() throws IOException {
+	public void compress() throws Exception {
         // read the input
         FileInputStream s = new FileInputStream("teste.txt");
         Vector input = new Vector();
@@ -137,33 +137,40 @@ public class Huffman_Tree {
         tab.close();
     }
 	
-	public void expand() {
+	public void expand() throws Exception {
 		
-		FileInputStream out;
-		ObjectInputStream tab;
 		float[] freq = new float[256];
-		try {
-			out = new FileInputStream("teste_comprimido.hue");
-			tab = new ObjectInputStream(out);
-			freq =(float[])tab.readObject();
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} 
+		FileOutputStream out = new FileOutputStream("teste_descomprimido.txt");
+		FileInputStream in = new FileInputStream("teste_comprimido.hue");
+		ObjectInputStream tab = new ObjectInputStream(in);
+		freq =(float[])tab.readObject();
 		
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
-
-        // build code table
-        String[] st = new String[256];
-        buildCode(st, root.tree, "");
+        
+        Huffman_Tree_Node x = root.tree;
+        byte b;
+        
+        while((b = (byte)in.read()) != -1) {
+        	
+            String s = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
+           
+            for (int i = 0; i<8; i++) {
+            	if (x.isLeaf()){
+            		out.write(x.c);
+            		x = root.tree;
+            	}
+                char bit = s.charAt(i);
+                if (bit==0) x = x.filho;
+                else     x = x.filho1;
+                
+            }
+        }
+        
         
         //TODO:usar o código para expandir
+        out.close();
+        in.close();
+        tab.close();
 	}
 	
 

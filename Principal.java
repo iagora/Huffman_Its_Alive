@@ -21,10 +21,15 @@ public class Principal {
 		Huffman_Tree Ht = new Huffman_Tree(frequencia);
 		try{
 			Ht.compress();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		try {
 			Ht.expand();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
