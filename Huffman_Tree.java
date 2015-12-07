@@ -93,18 +93,22 @@ public class Huffman_Tree {
         // build code table
         String[] st = new String[256];
         buildCode(st, root.tree, "");
-
+        
+        FileOutputStream out = new FileOutputStream("teste_comprimido.hue");
+        ObjectOutputStream tab = new ObjectOutputStream(out);
+        tab.writeObject(freq);
         // print trie for decoder
         //writeTrie(root);
 
         // codificando a saida
-        FileOutputStream out = new FileOutputStream("teste_comprimido.hue");
         int k =0;
         String b = "";
         byte a;
+        boolean flag = false;
         for (int i = 0; i < input.size(); i++) {
             String code = st[(int)input.get(i)];
 	            for (int j = 0; j < code.length(); j++) {
+	            	flag=false;
 	            	k++;
 	                if (code.charAt(j) == '0') {
 	                    b = b + '0';
@@ -115,15 +119,55 @@ public class Huffman_Tree {
 	                else throw new IllegalStateException("Illegal state");
 	                
 	                if(k % 8 == 0){
-	                	//System.out.print(b);
-	    	        	a = strToByteArray(b);
+	                	a = strToByteArray(b);
 	    	        	out.write(a);
 	    	        	b = "";
+	    	        	flag = true;
 	    	        }
 	            }
         }
+        if(!flag){
+        	while (b.length() < 8){
+        		b = b + '0';
+        	}
+        	a = strToByteArray(b);
+        	out.write(a);
+        }
         out.close();
+        tab.close();
     }
+	
+	public void expand() {
+		
+		FileInputStream out;
+		ObjectInputStream tab;
+		float[] freq = new float[256];
+		try {
+			out = new FileInputStream("teste_comprimido.hue");
+			tab = new ObjectInputStream(out);
+			freq =(float[])tab.readObject();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} 
+		
+        Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
+
+        // build code table
+        String[] st = new String[256];
+        buildCode(st, root.tree, "");
+        
+        //TODO:usar o código para expandir
+	}
+	
+
+
 	
 	private void buildCode(String[] st, Huffman_Tree_Node x, String s) {
         if (!x.isLeaf()) {

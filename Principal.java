@@ -24,6 +24,7 @@ public class Principal {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+			Ht.expand();
 	}
 
 }
