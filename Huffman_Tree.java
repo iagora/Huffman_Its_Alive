@@ -137,7 +137,7 @@ public class Huffman_Tree {
 	public void expandir() throws Exception {
 		
 		float[] freq = new float[256];
-		PrintWriter out = new PrintWriter("teste_descomprimido.txt");
+		FileOutputStream out = new FileOutputStream("teste_descomprimido.txt");
 		FileInputStream in = new FileInputStream("teste_comprimido.hue");
 		ObjectInputStream tab = new ObjectInputStream(in);
 		freq =(float[])tab.readObject();
