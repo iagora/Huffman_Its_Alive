@@ -10,7 +10,7 @@ public class JanelaHuff {
 
 	private JFrame frame;
 	float[] frequencia  = null; 
-	String caminho;
+	String caminho, filePath;
 	long tamanho;
 	String nome;
 	String[][] tabelaHex ;
@@ -85,6 +85,7 @@ public class JanelaHuff {
 				try {
 				frequencia =	read.readbytes();
 				caminho = read.caminho;
+				filePath = read.filePath;
 				tamanho = read.n_bytes;
 				nome = read.nomedoarquivo;
 				} catch (IOException e1) {
@@ -146,7 +147,7 @@ public class JanelaHuff {
 					textArea.setText("É necessário um arquivo .hue para expansão\n");
 				} else {
 					try{
-						huffman.expandir(caminho);
+						huffman.expandir(caminho, filePath);
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}

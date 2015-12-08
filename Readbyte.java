@@ -7,7 +7,7 @@ public class Readbyte {
 	FileInputStream input = null;
 	float[] frequencia = new float[256]; 
 	long n_bytes = 0  ;
-	String caminho,nomedoarquivo ;
+	String caminho,nomedoarquivo, filePath ;
 	public float[] readbytes() throws IOException{
 		//comentario teste
 		/*Le arquivo byte a byte e calcula fequencia */
@@ -18,6 +18,7 @@ public class Readbyte {
 			 
 			     if (retorno == JFileChooser.APPROVE_OPTION) {
 			    	 caminho = chooser.getSelectedFile().getAbsolutePath();
+			    	 filePath = caminho. substring(0,caminho.lastIndexOf(File.separator));
 			    	 nomedoarquivo = chooser.getSelectedFile().getName();
 			    	 System.out.println(nomedoarquivo);
 			        input = new FileInputStream(chooser.getSelectedFile());

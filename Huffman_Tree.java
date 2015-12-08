@@ -145,7 +145,7 @@ public class Huffman_Tree {
         return comprimentoMedio;
     }
 	
-	public void expandir(String local) throws Exception {
+	public void expandir(String local, String filePath) throws Exception {
 		
 		float[] freq = new float[256];
 		
@@ -155,7 +155,7 @@ public class Huffman_Tree {
 		long tam = (long)tab.readObject();
 		String nome =(String)tab.readObject();
 		
-		FileOutputStream out = new FileOutputStream("desc_"+nome);
+		FileOutputStream out = new FileOutputStream(filePath + "\\" + "desc_"+nome);
 		
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
         
