@@ -1,3 +1,8 @@
+/*
+ * Iago Passos da Silva					13/0028151
+ * Lucas Rodrigues de Freitas Ribeiro 	11/0129377
+ */
+
 
 public class Entropia {
 	 String[][] hex_tab = new String [2][256];

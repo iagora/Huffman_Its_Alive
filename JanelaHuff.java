@@ -3,7 +3,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.io.*;
-
+/*
+ * Iago Passos da Silva					13/0028151
+ * Lucas Rodrigues de Freitas Ribeiro 	11/0129377
+ */
 
 
 public class JanelaHuff {

@@ -2,6 +2,11 @@ import java.io.*;
 
 import javax.swing.JFileChooser;
 
+/*
+ * Iago Passos da Silva					13/0028151
+ * Lucas Rodrigues de Freitas Ribeiro 	11/0129377
+ */
+
 /*ReadByte on demand para ler arquivos grandes sem estourar memória*/ 
 public class Readbyte {
 	FileInputStream input = null;

@@ -2,6 +2,11 @@ import java.util.ArrayList;
 import java.io.*;
 import java.util.*;
 
+/*
+ * Iago Passos da Silva					13/0028151
+ * Lucas Rodrigues de Freitas Ribeiro 	11/0129377
+ */
+
 public class Huffman_Tree {
 	Huffman_Tree_Node tree = null;
 	private ArrayList<Huffman_Tree_Node> allNodes = new ArrayList<Huffman_Tree_Node>();	
