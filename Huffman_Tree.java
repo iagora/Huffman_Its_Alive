@@ -3,9 +3,8 @@ import java.io.*;
 import java.util.*;
 
 public class Huffman_Tree {
-	ArrayList<Huffman_Tree_Node> allNodes = new ArrayList<Huffman_Tree_Node>();
-	Readbyte ler = new Readbyte();
 	Huffman_Tree_Node tree = null;
+	private ArrayList<Huffman_Tree_Node> allNodes = new ArrayList<Huffman_Tree_Node>();	
 	private ObjectOutputStream tab;
 	
 	public Huffman_Tree(float[] freq){
@@ -13,7 +12,6 @@ public class Huffman_Tree {
 	}
 	
 	public Huffman_Tree(){
-		
 	}
 	
 	private Huffman_Tree_Node createTree(float[] frequencia){ //monta a árvore, entregando a raiz, funciona em um estilo recursivo
@@ -70,7 +68,7 @@ public class Huffman_Tree {
 	}
 
 		
-	public void comprimir(String caminho, float[] freq, long tam, String nome) throws Exception {
+	public float comprimir(String caminho, float[] freq, long tam, String nome) throws Exception {
         FileInputStream s = new FileInputStream(caminho);
         Vector<Integer> input = new Vector<Integer>();
         int c;
@@ -82,11 +80,6 @@ public class Huffman_Tree {
         } finally{
         	s.close();
         }
-
-        // acha a frequencia de cada byte
-        //float[] freq = new float[256];
-        //freq = ler.readbytes();
-        //long tam = ler.n_bytes;
         
         
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
@@ -94,6 +87,15 @@ public class Huffman_Tree {
         // constrói uma tabela de conversão direta
         String[] tabela = new String[256];
         buildCode(tabela, root.tree, "");
+        
+        // Cálcula o comprimento médio
+        float comprimentoMedio = 0;
+        for(int k = 0; k<256; k++){
+        	if(tabela[k]!= null){
+        		comprimentoMedio += freq[k]*tabela[k].length();
+        	}
+        }
+        
         FileOutputStream out = new FileOutputStream(caminho.substring(0,caminho.indexOf('.'))+".hue");
         tab = new ObjectOutputStream(out);
         tab.writeObject(freq);
@@ -139,6 +141,8 @@ public class Huffman_Tree {
         //System.out.print('\n'); //TESTE: quebra a linha pra separar a sequencia obtida na compressao da sequencia da expansao
         tab.close();
         out.close();
+        
+        return comprimentoMedio;
     }
 	
 	public void expandir(String local) throws Exception {
@@ -151,7 +155,7 @@ public class Huffman_Tree {
 		long tam = (long)tab.readObject();
 		String nome =(String)tab.readObject();
 		
-		FileOutputStream out = new FileOutputStream(nome);
+		FileOutputStream out = new FileOutputStream("desc_"+nome);
 		
         Huffman_Tree root = new Huffman_Tree(freq); //cria a árvore
         
